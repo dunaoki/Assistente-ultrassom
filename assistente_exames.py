@@ -124,13 +124,13 @@ Retorne no seguinte formato:
 
 situacao clinica: <descrição resumida da situação clínica>
 raciocinio reguladora: <explicação do seu raciocínio médico e critérios utilizados>
-classificacao final: <Vermelho, Amarelo, Verde ou Azul>
+classificacao final: <Vermelho, Amarelo, Verde , Azul e o motivo pela classificação final  >
 
 Exemplo de resposta esperada:
 
-situacao clinica: Paciente com dor torácica súbita e falta de ar
+Situacao clinica: Paciente com dor torácica súbita e falta de ar
 raciocinio reguladora: Paciente apresenta sinais de alerta que podem indicar síndrome coronariana aguda. Necessário priorizar atendimento imediato conforme protocolos de urgência.
-classificacao final: Vermelho
+classificacao final: Vermelho 
 """
 
 # Função de análise
@@ -167,7 +167,17 @@ def analisar_pedido(exame, indicacao, limiar=70):
                 {"role": "user", "content": prompt}
             ]
         )
-        resultado_html += f"<p style='font-size:18px; color:black; font-weight:bold'>Consulta OpenAI:<br>{resposta.choices[0].message.content.strip()}</p>"
+        # Recebe a resposta
+        resposta_texto = resposta.choices[0].message.content.strip()
+
+        # Formata para quebrar linhas depois de cada campo
+        resposta_formatada = resposta_texto.replace("Situação clinica:", "Situação clinica:\n") \
+                                        .replace("Raciocinio reguladora:", "\nRaciocinio reguladora:\n") \
+                                        .replace("Classificação final:", "\nClassificação final:\n")
+
+        # Exibe no Streamlit
+        resultado_html += f"<p style='font-size:18px; color:black; font-weight:bold'>Consulta OpenAI:<br>{resposta_formatada}</p>"
+
 
     return resultado_html
 
