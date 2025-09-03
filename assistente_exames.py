@@ -172,8 +172,8 @@ def analisar_pedido(exame, indicacao, limiar=70):
 
         # Formata para quebrar linhas depois de cada campo
         resposta_formatada = resposta_texto.replace("Situação clinica:", "Situação clinica:\n") \
-                                        .replace("Raciocinio reguladora:", "\nRaciocinio reguladora:\n") \
-                                        .replace("Classificação final:", "\nClassificação final:\n")
+                                            .replace("Raciocinio reguladora:", "\nRaciocinio reguladora:\n") \
+                                            .replace("Classificação final:", "\nClassificação final:\n")
 
         # Exibe no Streamlit
         resultado_html += f"<p style='font-size:18px; color:black'>Consulta OpenAI:<br>{resposta_formatada}</p>"
