@@ -176,7 +176,7 @@ def analisar_pedido(exame, indicacao, limiar=70):
                                         .replace("Classificação final:", "\nClassificação final:\n")
 
         # Exibe no Streamlit
-        resultado_html += f"<p style='font-size:18px; color:black; font-weight:bold'>Consulta OpenAI:<br>{resposta_formatada}</p>"
+        resultado_html += f"<p style='font-size:18px; color:black'>Consulta OpenAI:<br>{resposta_formatada}</p>"
 
 
     return resultado_html
