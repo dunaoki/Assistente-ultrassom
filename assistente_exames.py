@@ -170,13 +170,22 @@ def analisar_pedido(exame, indicacao, limiar=70):
         # Recebe a resposta
         resposta_texto = resposta.choices[0].message.content.strip()
 
-        # Formata para quebrar linhas depois de cada campo
-        resposta_formatada = resposta_texto.replace("Situação clinica:", "Situação clinica:\n") \
-                                            .replace("Raciocinio reguladora:", "\nRaciocinio reguladora:\n") \
-                                            .replace("Classificação final:", "\nClassificação final:\n")
+        # Separar cada campo
+        situacao_clinica = resposta_texto.split("Raciocinio reguladora:")[0].replace("Situação clinica:", "").strip()
+        raciocinio = resposta_texto.split("Raciocinio reguladora:")[1].split("Classificação final:")[0].strip()
+        classificacao = resposta_texto.split("Classificação final:")[1].strip()
 
-        # Exibe no Streamlit
-        resultado_html += f"<p style='font-size:18px; color:black'>Consulta OpenAI:<br>{resposta_formatada}</p>"
+        # Montar HTML separado para cada seção
+        resultado_html += f"""
+        <p style='font-size:18px;'>Situação clínica:</p>
+        <p style='font-size:18px;'>{situacao_clinica}</p>
+
+        <p style='font-size:18px;'>Raciocínio reguladora:</p>
+        <p style='font-size:18px;'>{raciocinio}</p>
+
+        <p style='font-size:18px;'>Classificação final:</p>
+        <p style='font-size:18px;'>{classificacao}</p>
+        """
 
 
     return resultado_html
